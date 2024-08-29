@@ -17,7 +17,7 @@ import kotlinx.coroutines.sync.Mutex
 @Composable
 fun MainScreen() {
 
-    val mutex = remember { Mutex() }
+    val mutex = remember { Mutex(locked = false) }
     var counter by remember { mutableIntStateOf(0) }
 
     Box(
@@ -34,8 +34,8 @@ fun MainScreen() {
                         Log.d("natiyje: launch", "launch: $it")
                         delay(timeMillis = 1000)
                         counter++
-                    } catch (e: Exception) {
-                        mutex.unlock()
+                    } finally {
+                         mutex.unlock()
                     }
                 }
             }
